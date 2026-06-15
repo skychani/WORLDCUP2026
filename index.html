@@ -194,19 +194,27 @@ function calcErr(p,a) { return Math.abs(p.korea-a.korea)+Math.abs(p.opponent-a.o
 function isExact(p,a) { return p.korea===a.korea && p.opponent===a.opponent; }
 function hasActual(mid) { const a=state.actuals[mid]; return a&&a.korea!=null&&a.opponent!=null; }
 
+function validPick(pk) {
+  if (!pk) return false;
+  // 0도 유효한 값 — 빈 문자열('')과 undefined/null만 무효
+  const kOk = pk.korea !== '' && pk.korea !== undefined && pk.korea !== null;
+  const oOk = pk.opponent !== '' && pk.opponent !== undefined && pk.opponent !== null;
+  return kOk && oOk;
+}
+
 function getWinners(mid) {
   if (!hasActual(mid)) return [];
-  const actual=state.actuals[mid];
-  const preds=state.participants.map(p=>{
-    const pk=p.picks?.[mid];
-    if(!pk||pk.korea===''||pk.korea==null||pk.opponent===''||pk.opponent==null) return null;
-    return {id:p.id,korea:Number(pk.korea),opponent:Number(pk.opponent)};
+  const actual = state.actuals[mid];
+  const preds = state.participants.map(p => {
+    const pk = p.picks?.[mid];
+    if (!validPick(pk)) return null;
+    return { id: p.id, korea: Number(pk.korea), opponent: Number(pk.opponent) };
   }).filter(Boolean);
   if (!preds.length) return [];
-  const exact=preds.filter(p=>isExact(p,actual));
-  if (exact.length) return exact.map(p=>p.id);
-  const minE=Math.min(...preds.map(p=>calcErr(p,actual)));
-  return preds.filter(p=>calcErr(p,actual)===minE).map(p=>p.id);
+  const exact = preds.filter(p => isExact(p, actual));
+  if (exact.length) return exact.map(p => p.id);
+  const minE = Math.min(...preds.map(p => calcErr(p, actual)));
+  return preds.filter(p => calcErr(p, actual) === minE).map(p => p.id);
 }
 
 function buildLeaderboard() {
@@ -215,7 +223,7 @@ function buildLeaderboard() {
     state.matches.forEach(m=>{
       if (!hasActual(m.id)) return;
       const pk=p.picks?.[m.id];
-      if(!pk||pk.korea===''||pk.korea==null) return;
+      if(!validPick(pk)) return;
       const pred={korea:Number(pk.korea),opponent:Number(pk.opponent)};
       if (isExact(pred,state.actuals[m.id])) exact++;
       if (getWinners(m.id).includes(p.id)) wins++;
@@ -260,7 +268,7 @@ function setPick(pid,mid,side,val) {
   const p=state.participants.find(p=>p.id===pid); if(!p) return;
   if (!p.picks) p.picks={};
   if (!p.picks[mid]) p.picks[mid]={};
-  p.picks[mid][side]=val===''?'':Math.max(0,Math.min(99,parseInt(val)||0));
+  const n=parseInt(val); p.picks[mid][side]=(val===''||isNaN(n))?'':Math.max(0,Math.min(99,n));
   save(); renderPicks(); renderLeaderboard();
 }
 function setActual(mid,side,val) {
@@ -306,7 +314,7 @@ function renderPicks() {
       :state.participants.map(p=>{
           const pk=p.picks?.[m.id]||{};
           const isW=winners.includes(p.id);
-          const hasPick=pk.korea!==''&&pk.korea!=null&&pk.opponent!==''&&pk.opponent!=null;
+          const hasPick=validPick(pk);
           const isE=ha&&hasPick&&isExact({korea:Number(pk.korea),opponent:Number(pk.opponent)},actual);
           const badge=isE?'<span class="pick-badge badge-exact">🎯 정확!</span>'
                      :isW?'<span class="pick-badge badge-close">🎉🎊 인접!</span>'
