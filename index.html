@@ -190,7 +190,7 @@ let state = {
 function save() { try { localStorage.setItem('wc2026v2', JSON.stringify(state)); } catch(e) {} }
 function load() { try { const d=localStorage.getItem('wc2026v2'); if(d) state={...state,...JSON.parse(d)}; } catch(e) {} }
 
-function calcErr(p,a) { return Math.abs(p.korea-a.korea)+Math.abs(p.opponent-a.opponent); }
+function calcErr(p,a) { return Math.abs((p.korea-p.opponent)-(a.korea-a.opponent)); }
 function isExact(p,a) { return p.korea===a.korea && p.opponent===a.opponent; }
 function hasActual(mid) { const a=state.actuals[mid]; return a&&a.korea!=null&&a.opponent!=null; }
 
