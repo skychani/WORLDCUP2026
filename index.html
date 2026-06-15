@@ -202,19 +202,31 @@ function validPick(pk) {
   return kOk && oOk;
 }
 
+function getResult(k, o) {
+  // 승/무/패 방향: 1=한국승, 0=무, -1=상대승
+  if (k > o) return 1;
+  if (k === o) return 0;
+  return -1;
+}
+
 function getWinners(mid) {
   if (!hasActual(mid)) return [];
   const actual = state.actuals[mid];
+  const actualResult = getResult(actual.korea, actual.opponent);
   const preds = state.participants.map(p => {
     const pk = p.picks?.[mid];
     if (!validPick(pk)) return null;
     return { id: p.id, korea: Number(pk.korea), opponent: Number(pk.opponent) };
   }).filter(Boolean);
   if (!preds.length) return [];
+  // 1순위: 정확한 스코어
   const exact = preds.filter(p => isExact(p, actual));
   if (exact.length) return exact.map(p => p.id);
-  const minE = Math.min(...preds.map(p => calcErr(p, actual)));
-  return preds.filter(p => calcErr(p, actual) === minE).map(p => p.id);
+  // 2순위: 승/무/패 방향이 맞는 사람 중 득실차 오차 최소
+  const sameResult = preds.filter(p => getResult(p.korea, p.opponent) === actualResult);
+  if (!sameResult.length) return []; // 아무도 승팀 못 맞추면 인접 없음
+  const minE = Math.min(...sameResult.map(p => calcErr(p, actual)));
+  return sameResult.filter(p => calcErr(p, actual) === minE).map(p => p.id);
 }
 
 function buildLeaderboard() {
