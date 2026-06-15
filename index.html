@@ -3,119 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026 월드컵 한국전 점수내기</title>
+<title>2026년 북중미 월드컵 점수 예측</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0a0e1a; color: #e8eaf2; font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0e1a; color: #e8eaf2; font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; }
 
-  .header {
-    background: linear-gradient(135deg, #0d2255 0%, #1a3a8f 50%, #c0392b 100%);
-    padding: 24px 20px 20px; text-align: center;
-  }
-  .header-sub { font-size: 12px; letter-spacing: 4px; color: #a8c4ff; text-transform: uppercase; margin-bottom: 6px; }
-  .header-title { font-size: 24px; font-weight: 800; color: #fff; }
-  .header-group { font-size: 12px; color: #7ba4e8; margin-top: 6px; }
+.header { background: linear-gradient(135deg, #0d2255 0%, #1a3a8f 55%, #c0392b 100%); padding: 22px 20px 18px; text-align: center; }
+.header-sub { font-size: 11px; letter-spacing: 4px; color: #a8c4ff; text-transform: uppercase; margin-bottom: 6px; }
+.header-title { font-size: 21px; font-weight: 800; color: #fff; line-height: 1.3; }
+.header-group { font-size: 12px; color: #7ba4e8; margin-top: 6px; }
 
-  .tabs { display: flex; background: #111827; border-bottom: 1px solid #1e2d4a; }
-  .tab { flex: 1; padding: 13px 0; border: none; background: none; color: #6b7a9c; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; font-family: inherit; }
-  .tab.active { color: #4a90e2; font-weight: 700; border-bottom-color: #4a90e2; }
+.tabs { display: flex; background: #111827; border-bottom: 1px solid #1e2d4a; }
+.tab { flex: 1; padding: 13px 0; border: none; background: none; color: #6b7a9c; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; font-family: inherit; }
+.tab.active { color: #4a90e2; font-weight: 700; border-bottom-color: #4a90e2; }
 
-  .content { padding: 16px; max-width: 700px; margin: 0 auto; }
+.content { padding: 16px; max-width: 720px; margin: 0 auto; }
+.card { background: #111827; border-radius: 12px; padding: 16px; margin-bottom: 14px; border: 1px solid #1e2d4a; }
+.card-label { font-size: 11px; color: #6b7a9c; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase; }
 
-  .card { background: #111827; border-radius: 12px; padding: 16px; margin-bottom: 14px; border: 1px solid #1e2d4a; }
-  .card-label { font-size: 11px; color: #6b7a9c; letter-spacing: 1px; margin-bottom: 10px; }
+.participant-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.input-text { flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid #2a3a5c; background: #0a0e1a; color: #e8eaf2; font-size: 14px; outline: none; font-family: inherit; }
+.input-text:focus { border-color: #4a90e2; }
+.btn-blue { padding: 9px 16px; border-radius: 8px; border: none; background: #1a3a8f; color: #fff; font-weight: 700; cursor: pointer; font-size: 14px; font-family: inherit; white-space: nowrap; }
+.btn-blue:hover { background: #2a4aaf; }
+.btn-red { padding: 9px 16px; border-radius: 8px; border: none; background: #7f1d1d; color: #fca5a5; font-weight: 700; cursor: pointer; font-size: 13px; font-family: inherit; }
+.btn-red:hover { background: #991b1b; }
 
-  .participant-row { display: flex; gap: 8px; margin-bottom: 12px; }
-  .input-text { flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid #2a3a5c; background: #0a0e1a; color: #e8eaf2; font-size: 14px; outline: none; font-family: inherit; }
-  .btn-add { padding: 9px 16px; border-radius: 8px; border: none; background: #1a3a8f; color: #fff; font-weight: 700; cursor: pointer; font-size: 14px; font-family: inherit; }
-  .btn-add:hover { background: #2a4aaf; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { display: flex; align-items: center; gap: 6px; background: #0d1829; border-radius: 20px; padding: 5px 10px 5px 14px; border: 1px solid #1e2d4a; }
+.tag span { font-size: 13px; color: #c8d4f0; }
+.tag-del { background: none; border: none; color: #3a4a6c; cursor: pointer; font-size: 18px; line-height: 1; padding: 0 2px; }
+.tag-del:hover { color: #ef4444; }
 
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tag { display: flex; align-items: center; gap: 6px; background: #0d1829; border-radius: 20px; padding: 5px 12px 5px 14px; border: 1px solid #1e2d4a; }
-  .tag span { font-size: 13px; color: #c8d4f0; }
-  .tag-del { background: none; border: none; color: #3a4a6c; cursor: pointer; font-size: 16px; line-height: 1; padding: 0; }
-  .tag-del:hover { color: #c0392b; }
+.match-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 10px; }
+.match-meta { flex: 1; min-width: 0; }
+.match-round { font-size: 11px; color: #6b7a9c; letter-spacing: 1px; margin-bottom: 4px; }
+.match-title { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.match-flag { font-size: 20px; }
+.match-info { font-size: 12px; color: #4a6a9c; margin-top: 4px; }
+.actual-badge { text-align: center; background: #0d2255; border-radius: 10px; padding: 8px 14px; flex-shrink: 0; }
+.ab-label { font-size: 10px; color: #7ba4e8; margin-bottom: 3px; letter-spacing: 1px; }
+.ab-score { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 2px; }
 
-  .match-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-  .match-round { font-size: 11px; color: #6b7a9c; letter-spacing: 1px; margin-bottom: 3px; }
-  .match-title { font-size: 16px; font-weight: 700; color: #fff; }
-  .match-info { font-size: 12px; color: #4a6a9c; margin-top: 3px; }
-  .actual-badge { text-align: center; background: #0d2255; border-radius: 8px; padding: 6px 14px; }
-  .actual-badge .label { font-size: 11px; color: #7ba4e8; margin-bottom: 2px; }
-  .actual-badge .score { font-size: 20px; font-weight: 800; color: #fff; }
+.pick-rows { display: flex; flex-direction: column; gap: 8px; }
+.pick-row { display: flex; align-items: center; gap: 10px; background: #0a0e1a; border-radius: 8px; padding: 8px 12px; border: 1px solid #1a2438; transition: background .2s, border-color .2s; }
+.pick-row.winner { background: rgba(26,58,143,0.25); border-color: #2a5abf; }
+.pick-name { width: 76px; font-size: 13px; color: #8a9bc0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+.pick-row.winner .pick-name { color: #7eb3ff; font-weight: 700; }
+.score-wrap { display: flex; align-items: center; gap: 6px; flex: 1; }
+.score-sep { color: #4a6a9c; font-weight: 700; font-size: 16px; }
+.score-input { width: 46px; height: 38px; text-align: center; font-size: 16px; font-weight: 700; border-radius: 8px; border: 1px solid #2a3a5c; background: #0a0e1a; color: #e8eaf2; outline: none; font-family: inherit; -moz-appearance: textfield; }
+.score-input::-webkit-outer-spin-button, .score-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.score-input:focus { border-color: #4a90e2; }
+.score-input-lg { width: 64px; height: 48px; font-size: 22px; }
+.pick-badge { min-width: 68px; text-align: right; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.badge-exact { color: #f5c518; }
+.badge-close { color: #60a5fa; }
 
-  .pick-rows { display: flex; flex-direction: column; gap: 8px; }
-  .pick-row { display: flex; align-items: center; gap: 10px; background: #0a0e1a; border-radius: 8px; padding: 8px 12px; border: 1px solid #1a2438; transition: all .2s; }
-  .pick-row.winner { background: rgba(26,58,143,0.3); border-color: #2a5abf; }
-  .pick-name { width: 72px; font-size: 13px; color: #8a9bc0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pick-row.winner .pick-name { color: #7eb3ff; font-weight: 700; }
-  .score-wrap { display: flex; align-items: center; gap: 6px; flex: 1; }
-  .score-sep { color: #4a6a9c; font-weight: 700; }
-  .score-input { width: 44px; height: 36px; text-align: center; font-size: 16px; font-weight: 700; border-radius: 8px; border: 1px solid #2a3a5c; background: #0a0e1a; color: #e8eaf2; outline: none; font-family: inherit; }
-  .score-input:disabled { background: #0d1829; color: #3a4a6c; cursor: not-allowed; }
-  .score-input-lg { width: 60px; height: 44px; font-size: 20px; }
-  .pick-badge { width: 52px; text-align: right; font-size: 12px; font-weight: 700; }
-  .badge-exact { color: #f5c518; }
-  .badge-close { color: #4a90e2; }
+.add-match-form { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.form-row { display: flex; gap: 8px; }
+.form-row .input-text { flex: 1; }
+.form-sel { flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid #2a3a5c; background: #0a0e1a; color: #e8eaf2; font-size: 14px; outline: none; font-family: inherit; cursor: pointer; }
+.form-sel:focus { border-color: #4a90e2; }
+.match-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.icon-btn { background: none; border: none; color: #3a4a6c; cursor: pointer; font-size: 18px; padding: 4px 6px; border-radius: 6px; line-height: 1; }
+.icon-btn:hover { color: #ef4444; background: rgba(239,68,68,0.1); }
 
-  .empty { color: #3a4a6c; font-size: 13px; text-align: center; padding: 12px 0; }
+.result-inner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+.result-team { font-size: 14px; color: #8a9bc0; display: flex; align-items: center; gap: 6px; }
+.r-flag { font-size: 20px; }
+.saved-ok { color: #34d399; font-size: 12px; font-weight: 700; margin-left: auto; }
 
-  /* 결과 입력 */
-  .result-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .result-team { font-size: 13px; color: #8a9bc0; }
-  .saved-badge { margin-left: auto; color: #34d399; font-size: 12px; font-weight: 700; }
+.podium { display: flex; gap: 10px; margin-bottom: 16px; }
+.podium-item { flex: 1; background: #111827; border-radius: 12px; padding: 14px 10px; text-align: center; border: 1px solid #1e2d4a; }
+.podium-item.gold { border-color: #f5c518; }
+.podium-item.silver { border-color: #94a3b8; }
+.podium-item.bronze { border-color: #b87333; }
+.podium-medal { font-size: 22px; }
+.podium-name { font-size: 13px; font-weight: 700; color: #e8eaf2; margin-top: 6px; word-break: break-all; }
+.podium-wins { font-size: 20px; font-weight: 800; margin-top: 4px; color: #e8eaf2; }
+.podium-item.gold .podium-wins { color: #f5c518; }
+.podium-exact { font-size: 11px; color: #6b7a9c; margin-top: 2px; }
 
-  /* 순위표 */
-  .podium { display: flex; gap: 10px; margin-bottom: 16px; }
-  .podium-item { flex: 1; background: #111827; border-radius: 12px; padding: 14px 10px; text-align: center; }
-  .podium-item.gold { border: 1px solid #f5c518; }
-  .podium-item.silver { border: 1px solid #94a3b8; }
-  .podium-item.bronze { border: 1px solid #b87333; }
-  .podium-medal { font-size: 22px; }
-  .podium-name { font-size: 13px; font-weight: 700; color: #e8eaf2; margin-top: 6px; }
-  .podium-wins { font-size: 20px; font-weight: 800; margin-top: 4px; }
-  .podium-item.gold .podium-wins { color: #f5c518; }
-  .podium-wins-rest { color: #e8eaf2; }
-  .podium-exact { font-size: 11px; color: #6b7a9c; margin-top: 2px; }
+.lb-table { background: #111827; border-radius: 12px; border: 1px solid #1e2d4a; overflow: hidden; margin-bottom: 14px; }
+.lb-head { display: grid; grid-template-columns: 36px 1fr 60px 60px; padding: 10px 16px; background: #0a0e1a; font-size: 11px; color: #4a6a9c; letter-spacing: 1px; }
+.lb-row { display: grid; grid-template-columns: 36px 1fr 60px 60px; padding: 12px 16px; border-top: 1px solid #1a2438; }
+.lb-row.top1 { background: rgba(245,197,24,0.06); }
+.lb-rank { font-size: 13px; font-weight: 700; color: #4a6a9c; }
+.lb-rank.r1 { color: #f5c518; } .lb-rank.r2 { color: #94a3b8; } .lb-rank.r3 { color: #b87333; }
+.lb-pname { font-size: 14px; color: #e8eaf2; }
+.lb-row.top1 .lb-pname { font-weight: 700; }
+.lb-wins { text-align: center; font-size: 15px; font-weight: 700; color: #4a90e2; }
+.lb-exact { text-align: center; font-size: 13px; color: #f5c518; }
 
-  .lb-table { background: #111827; border-radius: 12px; border: 1px solid #1e2d4a; overflow: hidden; margin-bottom: 14px; }
-  .lb-head { display: grid; grid-template-columns: 36px 1fr 60px 60px; padding: 10px 16px; background: #0a0e1a; font-size: 11px; color: #4a6a9c; letter-spacing: 1px; }
-  .lb-row { display: grid; grid-template-columns: 36px 1fr 60px 60px; padding: 12px 16px; border-top: 1px solid #1a2438; }
-  .lb-row.top { background: rgba(245,197,24,0.05); }
-  .lb-rank { font-size: 13px; font-weight: 700; }
-  .lb-rank.first { color: #f5c518; }
-  .lb-rank.rest { color: #4a6a9c; }
-  .lb-name { font-size: 14px; color: #e8eaf2; }
-  .lb-row.top .lb-name { font-weight: 700; }
-  .lb-wins { text-align: center; font-size: 15px; font-weight: 700; color: #4a90e2; }
-  .lb-exact { text-align: center; font-size: 13px; color: #f5c518; }
+.summary-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #1a2438; gap: 12px; }
+.summary-row:last-child { border-bottom: none; }
+.sr-round { font-size: 13px; color: #c8d4f0; }
+.sr-opp { font-size: 11px; color: #4a6a9c; margin-top: 2px; }
+.sum-right { text-align: right; flex-shrink: 0; }
+.sum-winners { font-size: 12px; color: #60a5fa; font-weight: 700; }
+.sum-score { font-size: 11px; color: #4a6a9c; margin-top: 2px; }
+.sum-none { font-size: 12px; color: #3a4a6c; }
 
-  .match-summary { margin-top: 4px; }
-  .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #1a2438; }
-  .summary-row:last-child { border-bottom: none; }
-  .summary-left .round { font-size: 13px; color: #c8d4f0; }
-  .summary-left .opp { font-size: 11px; color: #4a6a9c; }
-  .summary-right { text-align: right; }
-  .summary-winners { font-size: 12px; color: #4a90e2; font-weight: 700; }
-  .summary-score { font-size: 11px; color: #4a6a9c; }
-  .summary-none { font-size: 12px; color: #3a4a6c; }
+.empty { color: #3a4a6c; font-size: 13px; text-align: center; padding: 14px 0; }
+.hint { font-size: 12px; color: #6b7a9c; margin-bottom: 12px; }
+.bottom-btns { display: flex; gap: 8px; margin-top: 16px; padding-bottom: 28px; }
+.btn-io { flex: 1; padding: 10px 0; border-radius: 8px; border: 1px solid #1e2d4a; background: #111827; color: #7ba4e8; font-size: 13px; cursor: pointer; font-family: inherit; }
+.btn-io:hover { background: #1a2438; }
 
-  .bottom-btns { display: flex; gap: 8px; margin-top: 16px; }
-  .btn-io { flex: 1; padding: 10px 0; border-radius: 8px; border: 1px solid #1e2d4a; background: #111827; color: #7ba4e8; font-size: 13px; cursor: pointer; font-family: inherit; }
-  .btn-io:hover { background: #1a2438; }
-
-  @media (max-width: 400px) {
-    .pick-name { width: 56px; font-size: 12px; }
-    .score-input { width: 38px; }
-  }
+@media (max-width: 420px) {
+  .pick-name { width: 58px; font-size: 12px; }
+  .score-input { width: 40px; height: 34px; font-size: 14px; }
+  .match-title { font-size: 14px; }
+}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-sub">FIFA World Cup 2026</div>
-  <div class="header-title">🇰🇷 대한민국 점수내기</div>
-  <div class="header-group">Group A · 멕시코 / 캐나다 / 미국</div>
+  <div class="header-sub">FIFA World Cup 2026 · Canada · Mexico · USA</div>
+  <div class="header-title">🇰🇷 2026년 북중미 월드컵 점수 예측</div>
+  <div class="header-group">Group A — 체코 · 멕시코 · 남아공</div>
 </div>
 
 <div class="tabs">
@@ -125,22 +133,19 @@
 </div>
 
 <div class="content">
-  <!-- 참여자 관리 -->
   <div class="card">
     <div class="card-label">참여자 관리</div>
     <div class="participant-row">
       <input class="input-text" id="nameInput" placeholder="이름 입력 후 Enter" onkeydown="if(event.key==='Enter') addParticipant()">
-      <button class="btn-add" onclick="addParticipant()">추가</button>
+      <button class="btn-blue" onclick="addParticipant()">추가</button>
     </div>
     <div class="tags" id="tagList"><div class="empty">참여자를 추가해주세요</div></div>
   </div>
 
-  <!-- 탭 패널 -->
   <div id="tab-picks"></div>
   <div id="tab-results" style="display:none"></div>
   <div id="tab-leaderboard" style="display:none"></div>
 
-  <!-- 저장/불러오기 -->
   <div class="bottom-btns">
     <button class="btn-io" onclick="exportJSON()">JSON 내보내기</button>
     <button class="btn-io" onclick="document.getElementById('fileInput').click()">JSON 불러오기</button>
@@ -149,296 +154,325 @@
 </div>
 
 <script>
-// ── 데이터 ──────────────────────────────────────────────────
-const MATCHES = [
-  { id:1, round:'조별리그 1차전', opponent:'체코',   flag:'🇨🇿', dateKr:'6월 11일 (목)', venue:'에스타디오 아크론, 과달라하라' },
-  { id:2, round:'조별리그 2차전', opponent:'멕시코', flag:'🇲🇽', dateKr:'6월 18일 (목)', venue:'에스타디오 아크론, 과달라하라' },
-  { id:3, round:'조별리그 3차전', opponent:'남아공', flag:'🇿🇦', dateKr:'6월 24일 (수)', venue:'에스타디오 BBVA, 몬테레이' },
-];
+const FLAG_MAP = {
+  '한국':'🇰🇷','체코':'🇨🇿','멕시코':'🇲🇽','남아공':'🇿🇦','미국':'🇺🇸','캐나다':'🇨🇦',
+  '브라질':'🇧🇷','아르헨티나':'🇦🇷','프랑스':'🇫🇷','독일':'🇩🇪','스페인':'🇪🇸',
+  '포르투갈':'🇵🇹','잉글랜드':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','일본':'🇯🇵','호주':'🇦🇺','이란':'🇮🇷',
+  '사우디아라비아':'🇸🇦','모로코':'🇲🇦','세네갈':'🇸🇳','가나':'🇬🇭','나이지리아':'🇳🇬',
+  '이집트':'🇪🇬','카메룬':'🇨🇲','코트디부아르':'🇨🇮','콜롬비아':'🇨🇴','우루과이':'🇺🇾',
+  '칠레':'🇨🇱','에콰도르':'🇪🇨','페루':'🇵🇪','파라과이':'🇵🇾','네덜란드':'🇳🇱',
+  '벨기에':'🇧🇪','스위스':'🇨🇭','덴마크':'🇩🇰','스웨덴':'🇸🇪','폴란드':'🇵🇱',
+  '크로아티아':'🇭🇷','세르비아':'🇷🇸','터키':'🇹🇷','우크라이나':'🇺🇦','오스트리아':'🇦🇹',
+  '카타르':'🇶🇦','이라크':'🇮🇶','요르단':'🇯🇴','우즈베키스탄':'🇺🇿','중국':'🇨🇳',
+  '튀니지':'🇹🇳','알제리':'🇩🇿','뉴질랜드':'🇳🇿','자메이카':'🇯🇲','코스타리카':'🇨🇷',
+  '파나마':'🇵🇦','온두라스':'🇭🇳','과테말라':'🇬🇹','슬로바키아':'🇸🇰','그리스':'🇬🇷',
+  '조지아':'🇬🇪','알바니아':'🇦🇱','헝가리':'🇭🇺','루마니아':'🇷🇴','슬로베니아':'🇸🇮',
+};
+const COUNTRY_LIST = Object.keys(FLAG_MAP).filter(c=>c!=='한국').sort();
+
+function getFlag(name) {
+  if (!name) return '🏳️';
+  const k = Object.keys(FLAG_MAP).find(k => name === k || name.includes(k));
+  return k ? FLAG_MAP[k] : '🏳️';
+}
 
 let state = {
-  participants: [],   // { id, name, picks: { matchId: {korea, opponent} } }
-  actuals: { 1: {korea:2, opponent:1} },  // 1차전 결과 기입
+  participants: [],
+  matches: [
+    {id:1, round:'조별리그 1차전', opponent:'체코',   dateKr:'6월 11일 (목)', venue:'에스타디오 아크론, 과달라하라'},
+    {id:2, round:'조별리그 2차전', opponent:'멕시코', dateKr:'6월 18일 (목)', venue:'에스타디오 아크론, 과달라하라'},
+    {id:3, round:'조별리그 3차전', opponent:'남아공', dateKr:'6월 24일 (수)', venue:'에스타디오 BBVA, 몬테레이'},
+  ],
+  actuals: {1:{korea:2,opponent:1}},
+  nextId: 4,
 };
 
-// ── 저장 ───────────────────────────────────────────────────
-function save() {
-  try { localStorage.setItem('wc2026', JSON.stringify(state)); } catch(e) {}
-}
-function load() {
-  try {
-    const d = localStorage.getItem('wc2026');
-    if (d) state = JSON.parse(d);
-  } catch(e) {}
-}
+function save() { try { localStorage.setItem('wc2026v2', JSON.stringify(state)); } catch(e) {} }
+function load() { try { const d=localStorage.getItem('wc2026v2'); if(d) state={...state,...JSON.parse(d)}; } catch(e) {} }
 
-// ── 채점 ───────────────────────────────────────────────────
-function err(pred, actual) {
-  return Math.abs(pred.korea - actual.korea) + Math.abs(pred.opponent - actual.opponent);
-}
-function isExact(pred, actual) {
-  return pred.korea === actual.korea && pred.opponent === actual.opponent;
-}
-function getWinners(matchId) {
-  const actual = state.actuals[matchId];
-  if (!actual || actual.korea === undefined || actual.korea === null ||
-      actual.opponent === undefined || actual.opponent === null) return [];
-  const preds = state.participants.map(p => {
-    const pk = p.picks?.[matchId];
-    if (!pk || pk.korea === '' || pk.korea === undefined || pk.opponent === '' || pk.opponent === undefined) return null;
-    return { id: p.id, korea: Number(pk.korea), opponent: Number(pk.opponent) };
+function calcErr(p,a) { return Math.abs(p.korea-a.korea)+Math.abs(p.opponent-a.opponent); }
+function isExact(p,a) { return p.korea===a.korea && p.opponent===a.opponent; }
+function hasActual(mid) { const a=state.actuals[mid]; return a&&a.korea!=null&&a.opponent!=null; }
+
+function getWinners(mid) {
+  if (!hasActual(mid)) return [];
+  const actual=state.actuals[mid];
+  const preds=state.participants.map(p=>{
+    const pk=p.picks?.[mid];
+    if(!pk||pk.korea===''||pk.korea==null||pk.opponent===''||pk.opponent==null) return null;
+    return {id:p.id,korea:Number(pk.korea),opponent:Number(pk.opponent)};
   }).filter(Boolean);
   if (!preds.length) return [];
-  const exact = preds.filter(p => isExact(p, actual));
-  if (exact.length) return exact.map(p => p.id);
-  const minE = Math.min(...preds.map(p => err(p, actual)));
-  return preds.filter(p => err(p, actual) === minE).map(p => p.id);
-}
-function buildLeaderboard() {
-  return state.participants.map(p => {
-    let wins = 0, exact = 0;
-    MATCHES.forEach(m => {
-      const actual = state.actuals[m.id];
-      if (!actual || actual.korea === undefined || actual.korea === null) return;
-      const pk = p.picks?.[m.id];
-      if (!pk || pk.korea === '' || pk.korea === undefined) return;
-      const pred = { korea: Number(pk.korea), opponent: Number(pk.opponent) };
-      if (isExact(pred, actual)) exact++;
-      if (getWinners(m.id).includes(p.id)) wins++;
-    });
-    return { ...p, wins, exact };
-  }).sort((a,b) => b.wins - a.wins || b.exact - a.exact);
+  const exact=preds.filter(p=>isExact(p,actual));
+  if (exact.length) return exact.map(p=>p.id);
+  const minE=Math.min(...preds.map(p=>calcErr(p,actual)));
+  return preds.filter(p=>calcErr(p,actual)===minE).map(p=>p.id);
 }
 
-// ── 참여자 ─────────────────────────────────────────────────
+function buildLeaderboard() {
+  return state.participants.map(p=>{
+    let wins=0,exact=0;
+    state.matches.forEach(m=>{
+      if (!hasActual(m.id)) return;
+      const pk=p.picks?.[m.id];
+      if(!pk||pk.korea===''||pk.korea==null) return;
+      const pred={korea:Number(pk.korea),opponent:Number(pk.opponent)};
+      if (isExact(pred,state.actuals[m.id])) exact++;
+      if (getWinners(m.id).includes(p.id)) wins++;
+    });
+    return {...p,wins,exact};
+  }).sort((a,b)=>b.wins-a.wins||b.exact-a.exact);
+}
+
 function addParticipant() {
-  const name = document.getElementById('nameInput').value.trim();
+  const name=document.getElementById('nameInput').value.trim();
   if (!name) return;
-  if (state.participants.find(p => p.name === name)) { alert('이미 있는 이름입니다.'); return; }
-  state.participants.push({ id: Date.now(), name, picks: {} });
-  document.getElementById('nameInput').value = '';
+  if (state.participants.find(p=>p.name===name)) { alert('이미 있는 이름입니다.'); return; }
+  state.participants.push({id:Date.now(),name,picks:{}});
+  document.getElementById('nameInput').value='';
   save(); render();
 }
 function removeParticipant(id) {
-  state.participants = state.participants.filter(p => p.id !== id);
+  if (!confirm('참여자를 삭제할까요?')) return;
+  state.participants=state.participants.filter(p=>p.id!==id);
   save(); render();
 }
 
-// ── 예측 입력 ───────────────────────────────────────────────
-function setPick(pid, mid, side, val) {
-  const p = state.participants.find(p => p.id === pid);
-  if (!p) return;
-  if (!p.picks) p.picks = {};
-  if (!p.picks[mid]) p.picks[mid] = {};
-  p.picks[mid][side] = val === '' ? '' : Math.max(0, Math.min(99, parseInt(val)||0));
+function addMatch() {
+  const selVal=document.getElementById('newOpp').value;
+  const custVal=document.getElementById('newOppCustom').value.trim();
+  const opp=custVal||selVal;
+  if (!opp) { alert('상대팀을 선택하거나 입력해주세요.'); return; }
+  const rnd=document.getElementById('newRound').value.trim();
+  const dt=document.getElementById('newDate').value.trim();
+  const ven=document.getElementById('newVenue').value.trim();
+  state.matches.push({id:state.nextId++, round:rnd||'추가 경기', opponent:opp, dateKr:dt||'', venue:ven||''});
+  save(); render(); switchTab('picks');
+}
+function removeMatch(id) {
+  if (!confirm('경기를 삭제할까요?')) return;
+  state.matches=state.matches.filter(m=>m.id!==id);
+  delete state.actuals[id];
+  save(); render();
+}
+
+function setPick(pid,mid,side,val) {
+  const p=state.participants.find(p=>p.id===pid); if(!p) return;
+  if (!p.picks) p.picks={};
+  if (!p.picks[mid]) p.picks[mid]={};
+  p.picks[mid][side]=val===''?'':Math.max(0,Math.min(99,parseInt(val)||0));
   save(); renderPicks(); renderLeaderboard();
 }
-
-// ── 결과 입력 ───────────────────────────────────────────────
-function setActual(mid, side, val) {
-  if (!state.actuals[mid]) state.actuals[mid] = {};
-  state.actuals[mid][side] = val === '' ? null : Math.max(0, Math.min(99, parseInt(val)||0));
+function setActual(mid,side,val) {
+  if (!state.actuals[mid]) state.actuals[mid]={};
+  state.actuals[mid][side]=val===''?null:Math.max(0,Math.min(99,parseInt(val)||0));
   save(); render();
 }
 
-// ── 탭 전환 ────────────────────────────────────────────────
-let currentTab = 'picks';
+let currentTab='picks';
 function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tab').forEach((el,i) => {
-    el.classList.toggle('active', ['picks','results','leaderboard'][i] === tab);
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach((el,i)=>{
+    el.classList.toggle('active',['picks','results','leaderboard'][i]===tab);
   });
-  ['picks','results','leaderboard'].forEach(t => {
-    document.getElementById('tab-'+t).style.display = t === tab ? '' : 'none';
+  ['picks','results','leaderboard'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===tab?'':'none';
   });
 }
 
-// ── 렌더 ───────────────────────────────────────────────────
-function render() {
-  renderTags();
-  renderPicks();
-  renderResults();
-  renderLeaderboard();
-}
+function render() { renderTags(); renderPicks(); renderResults(); renderLeaderboard(); }
 
 function renderTags() {
-  const el = document.getElementById('tagList');
-  if (!state.participants.length) { el.innerHTML = '<div class="empty">참여자를 추가해주세요</div>'; return; }
-  el.innerHTML = state.participants.map(p => `
-    <div class="tag">
-      <span>${esc(p.name)}</span>
-      <button class="tag-del" onclick="removeParticipant(${p.id})">×</button>
-    </div>
-  `).join('');
+  const el=document.getElementById('tagList');
+  if (!state.participants.length) { el.innerHTML='<div class="empty">참여자를 추가해주세요</div>'; return; }
+  el.innerHTML=state.participants.map(p=>`
+    <div class="tag"><span>${esc(p.name)}</span><button class="tag-del" onclick="removeParticipant(${p.id})">×</button></div>`).join('');
 }
 
 function renderPicks() {
-  const el = document.getElementById('tab-picks');
-  el.innerHTML = MATCHES.map(m => {
-    const actual = state.actuals[m.id];
-    const hasActual = actual && actual.korea !== null && actual.korea !== undefined &&
-                      actual.opponent !== null && actual.opponent !== undefined;
-    const winners = hasActual ? getWinners(m.id) : [];
-    const locked = hasActual;
-
-    const actualBadge = hasActual ? `
+  const el=document.getElementById('tab-picks');
+  const matchCards=state.matches.map(m=>{
+    const flag=getFlag(m.opponent);
+    const actual=state.actuals[m.id];
+    const ha=hasActual(m.id);
+    const winners=ha?getWinners(m.id):[];
+    const actualBadge=ha?`
       <div class="actual-badge">
-        <div class="label">실제 결과</div>
-        <div class="score">${actual.korea} : ${actual.opponent}</div>
-      </div>` : '';
-
-    const rows = state.participants.length === 0
-      ? '<div class="empty">위에서 참여자를 추가하세요</div>'
-      : state.participants.map(p => {
-          const pk = p.picks?.[m.id] || {};
-          const isW = winners.includes(p.id);
-          const hasPick = pk.korea !== '' && pk.korea !== undefined && pk.opponent !== '' && pk.opponent !== undefined;
-          const isE = hasActual && hasPick && isExact({korea:Number(pk.korea),opponent:Number(pk.opponent)}, actual);
-          const badge = isE ? '<span class="pick-badge badge-exact">정확!</span>'
-                       : isW ? '<span class="pick-badge badge-close">인접</span>'
-                       : '<span class="pick-badge"></span>';
-          const dis = locked ? 'disabled' : '';
+        <div class="ab-label">실제 결과</div>
+        <div class="ab-score">🇰🇷${actual.korea}:${actual.opponent}${flag}</div>
+      </div>`:'';
+    const rows=state.participants.length===0
+      ?'<div class="empty">위에서 참여자를 추가하세요</div>'
+      :state.participants.map(p=>{
+          const pk=p.picks?.[m.id]||{};
+          const isW=winners.includes(p.id);
+          const hasPick=pk.korea!==''&&pk.korea!=null&&pk.opponent!==''&&pk.opponent!=null;
+          const isE=ha&&hasPick&&isExact({korea:Number(pk.korea),opponent:Number(pk.opponent)},actual);
+          const badge=isE?'<span class="pick-badge badge-exact">🎯 정확!</span>'
+                     :isW?'<span class="pick-badge badge-close">🎉🎊 인접!</span>'
+                     :'<span class="pick-badge"></span>';
           return `
           <div class="pick-row ${isW?'winner':''}">
             <div class="pick-name">${esc(p.name)}</div>
             <div class="score-wrap">
-              <input class="score-input" type="number" min="0" max="99" value="${pk.korea??''}" placeholder="0" ${dis}
+              <input class="score-input" type="number" min="0" max="99" inputmode="numeric" value="${pk.korea??''}" placeholder="0"
                 oninput="setPick(${p.id},${m.id},'korea',this.value)">
               <span class="score-sep">:</span>
-              <input class="score-input" type="number" min="0" max="99" value="${pk.opponent??''}" placeholder="0" ${dis}
+              <input class="score-input" type="number" min="0" max="99" inputmode="numeric" value="${pk.opponent??''}" placeholder="0"
                 oninput="setPick(${p.id},${m.id},'opponent',this.value)">
-            </div>
-            ${badge}
+            </div>${badge}
           </div>`;
         }).join('');
-
     return `
     <div class="card">
       <div class="match-header">
-        <div>
-          <div class="match-round">${m.round}</div>
-          <div class="match-title">🇰🇷 한국 vs ${m.flag} ${m.opponent}</div>
-          <div class="match-info">${m.dateKr} · ${m.venue}</div>
+        <div class="match-meta">
+          <div class="match-round">${esc(m.round)}</div>
+          <div class="match-title"><span class="match-flag">🇰🇷</span>한국 vs <span class="match-flag">${flag}</span>${esc(m.opponent)}</div>
+          <div class="match-info">${esc(m.dateKr)}${m.venue?' · '+esc(m.venue):''}</div>
         </div>
-        ${actualBadge}
+        <div class="match-actions">
+          ${actualBadge}
+          <button class="icon-btn" title="경기 삭제" onclick="removeMatch(${m.id})">🗑</button>
+        </div>
       </div>
       <div class="pick-rows">${rows}</div>
     </div>`;
   }).join('');
+
+  const countryOpts=COUNTRY_LIST.map(c=>`<option value="${c}">${getFlag(c)} ${c}</option>`).join('');
+  const addCard=`
+  <div class="card">
+    <div class="card-label">경기 추가</div>
+    <div class="add-match-form" id="addMatchForm">
+      <div class="form-row">
+        <select class="form-sel" id="newOpp" onchange="document.getElementById('newOppCustom').value=''">
+          <option value="">국가 선택...</option>${countryOpts}
+        </select>
+        <input class="input-text" id="newOppCustom" placeholder="직접 입력" oninput="document.getElementById('newOpp').value=''">
+      </div>
+      <div class="form-row">
+        <input class="input-text" id="newRound" placeholder="라운드 (예: 16강)">
+        <input class="input-text" id="newDate" placeholder="날짜 (예: 7월 1일)">
+      </div>
+      <input class="input-text" id="newVenue" placeholder="경기장 (선택 사항)">
+      <div style="display:flex;gap:8px">
+        <button class="btn-blue" onclick="addMatch()">추가 확정</button>
+        <button class="btn-red" onclick="toggleAddForm()">취소</button>
+      </div>
+    </div>
+    <button class="btn-blue" id="toggleAddBtn" style="width:100%" onclick="toggleAddForm()">+ 경기 추가</button>
+  </div>`;
+  el.innerHTML=matchCards+addCard;
+}
+
+function toggleAddForm() {
+  const f=document.getElementById('addMatchForm');
+  const b=document.getElementById('toggleAddBtn');
+  const showing=f.style.display==='flex';
+  f.style.display=showing?'none':'flex';
+  b.style.display=showing?'':'none';
 }
 
 function renderResults() {
-  const el = document.getElementById('tab-results');
-  el.innerHTML = '<div style="font-size:12px;color:#6b7a9c;margin-bottom:12px;letter-spacing:.5px">경기 종료 후 실제 스코어를 입력하면 자동 채점됩니다.</div>'
-  + MATCHES.map(m => {
-    const actual = state.actuals[m.id] || {};
-    const hasActual = actual.korea !== null && actual.korea !== undefined &&
-                      actual.opponent !== null && actual.opponent !== undefined;
+  const el=document.getElementById('tab-results');
+  el.innerHTML='<div class="hint">경기 종료 후 실제 스코어 입력 → 자동 채점됩니다. 언제든 수정 가능합니다.</div>'
+  +state.matches.map(m=>{
+    const flag=getFlag(m.opponent);
+    const actual=state.actuals[m.id]||{};
+    const ha=actual.korea!=null&&actual.opponent!=null;
     return `
     <div class="card">
-      <div class="match-round">${m.round}</div>
-      <div class="match-title" style="margin-bottom:12px">🇰🇷 한국 vs ${m.flag} ${m.opponent} <span style="font-size:12px;color:#4a6a9c;font-weight:400">${m.dateKr}</span></div>
-      <div class="result-row">
-        <span class="result-team">🇰🇷 한국</span>
-        <input class="score-input score-input-lg" type="number" min="0" max="99" value="${actual.korea??''}" placeholder="0"
-          oninput="setActual(${m.id},'korea',this.value)">
-        <span class="score-sep" style="font-size:20px">:</span>
-        <input class="score-input score-input-lg" type="number" min="0" max="99" value="${actual.opponent??''}" placeholder="0"
-          oninput="setActual(${m.id},'opponent',this.value)">
-        <span class="result-team">${m.flag} ${m.opponent}</span>
-        ${hasActual ? '<span class="saved-badge">저장됨</span>' : ''}
+      <div class="match-round">${esc(m.round)}</div>
+      <div class="match-title" style="margin-bottom:0">
+        <span class="match-flag">🇰🇷</span>한국 vs <span class="match-flag">${flag}</span>${esc(m.opponent)}
+        <span style="font-size:12px;color:#4a6a9c;font-weight:400">${esc(m.dateKr)}</span>
+      </div>
+      <div class="result-inner">
+        <span class="result-team"><span class="r-flag">🇰🇷</span>한국</span>
+        <input class="score-input score-input-lg" type="number" min="0" max="99" inputmode="numeric"
+          value="${actual.korea??''}" placeholder="0" oninput="setActual(${m.id},'korea',this.value)">
+        <span class="score-sep" style="font-size:24px">:</span>
+        <input class="score-input score-input-lg" type="number" min="0" max="99" inputmode="numeric"
+          value="${actual.opponent??''}" placeholder="0" oninput="setActual(${m.id},'opponent',this.value)">
+        <span class="result-team"><span class="r-flag">${flag}</span>${esc(m.opponent)}</span>
+        ${ha?'<span class="saved-ok">✓ 저장됨</span>':''}
       </div>
     </div>`;
   }).join('');
 }
 
 function renderLeaderboard() {
-  const el = document.getElementById('tab-leaderboard');
-  const lb = buildLeaderboard();
-  if (!lb.length) { el.innerHTML = '<div class="empty" style="padding:40px 0">참여자를 추가하고 예측을 입력해주세요</div>'; return; }
-
-  const medals = ['🥇','🥈','🥉'];
-  const classes = ['gold','silver','bronze'];
-  const podium = lb.slice(0,3).map((p,i) => `
-    <div class="podium-item ${classes[i]||''}">
+  const el=document.getElementById('tab-leaderboard');
+  const lb=buildLeaderboard();
+  if (!lb.length) { el.innerHTML='<div class="empty" style="padding:40px 0">참여자를 추가하고 예측을 입력해주세요</div>'; return; }
+  const medals=['🥇','🥈','🥉'], cls=['gold','silver','bronze'], rcls=['r1','r2','r3'];
+  const podium=lb.slice(0,3).map((p,i)=>`
+    <div class="podium-item ${cls[i]||''}">
       <div class="podium-medal">${medals[i]||''}</div>
       <div class="podium-name">${esc(p.name)}</div>
-      <div class="podium-wins ${i===0?'':'podium-wins-rest'}">${p.wins}승</div>
+      <div class="podium-wins">${p.wins}승</div>
       <div class="podium-exact">정확 ${p.exact}회</div>
     </div>`).join('');
-
-  const rows = lb.map((p,i) => `
-    <div class="lb-row ${i===0?'top':''}">
-      <div class="lb-rank ${i===0?'first':'rest'}">${i+1}</div>
-      <div class="lb-name">${esc(p.name)}</div>
+  const rows=lb.map((p,i)=>`
+    <div class="lb-row ${i===0?'top1':''}">
+      <div class="lb-rank ${rcls[i]||''}">${i+1}</div>
+      <div class="lb-pname">${esc(p.name)}</div>
       <div class="lb-wins">${p.wins}</div>
       <div class="lb-exact">${p.exact}</div>
     </div>`).join('');
-
-  const summaryRows = MATCHES.map(m => {
-    const actual = state.actuals[m.id];
-    const hasActual = actual && actual.korea !== null && actual.korea !== undefined &&
-                      actual.opponent !== null && actual.opponent !== undefined;
-    const winners = hasActual ? getWinners(m.id) : [];
-    const winNames = state.participants.filter(p => winners.includes(p.id)).map(p => p.name);
-    const right = !hasActual
-      ? '<span class="summary-none">미정</span>'
-      : winNames.length === 0
-      ? '<span class="summary-none">예측 없음</span>'
-      : `<div class="summary-winners">${winNames.map(esc).join(', ')}</div>
-         <div class="summary-score">실제 ${actual.korea}:${actual.opponent}</div>`;
+  const summaryRows=state.matches.map(m=>{
+    const flag=getFlag(m.opponent);
+    const ha=hasActual(m.id);
+    const actual=state.actuals[m.id];
+    const winners=ha?getWinners(m.id):[];
+    const winNames=state.participants.filter(p=>winners.includes(p.id)).map(p=>p.name);
+    const right=!ha?'<span class="sum-none">미정</span>'
+      :winNames.length===0?'<span class="sum-none">예측 없음</span>'
+      :`<div class="sum-winners">🎉 ${winNames.map(esc).join(', ')}</div>
+        <div class="sum-score">실제 ${actual.korea}:${actual.opponent}</div>`;
     return `
     <div class="summary-row">
-      <div class="summary-left">
-        <div class="round">${m.round}</div>
-        <div class="opp">${m.opponent}</div>
-      </div>
-      <div class="summary-right">${right}</div>
+      <div><div class="sr-round">${esc(m.round)}</div><div class="sr-opp">${flag} ${esc(m.opponent)}</div></div>
+      <div class="sum-right">${right}</div>
     </div>`;
   }).join('');
-
-  el.innerHTML = `
+  el.innerHTML=`
     <div class="podium">${podium}</div>
     <div class="lb-table">
       <div class="lb-head"><div>#</div><div>참여자</div><div style="text-align:center">승리</div><div style="text-align:center">정확</div></div>
       ${rows}
     </div>
-    <div class="card match-summary">
-      <div class="card-label">경기별 채점 결과</div>
-      ${summaryRows}
-    </div>`;
+    <div class="card"><div class="card-label">경기별 채점 결과</div>${summaryRows}</div>`;
 }
 
-// ── JSON 내보내기/불러오기 ────────────────────────────────
 function exportJSON() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'worldcup2026_picks.json';
-  a.click();
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='worldcup2026_picks.json'; a.click();
 }
 function importJSON(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
     try {
-      const d = JSON.parse(ev.target.result);
-      if (d.participants) state.participants = d.participants;
-      if (d.actuals) state.actuals = d.actuals;
+      const d=JSON.parse(ev.target.result);
+      if(d.participants) state.participants=d.participants;
+      if(d.matches) state.matches=d.matches;
+      if(d.actuals) state.actuals=d.actuals;
+      if(d.nextId) state.nextId=d.nextId;
       save(); render();
     } catch(err) { alert('파일 형식이 올바르지 않습니다.'); }
   };
-  reader.readAsText(file);
-  e.target.value = '';
+  reader.readAsText(file); e.target.value='';
 }
 
 function esc(s) {
+  if(s==null) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── 초기화 ────────────────────────────────────────────────
-load();
-render();
+load(); render();
 </script>
 </body>
 </html>
