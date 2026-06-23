@@ -251,27 +251,47 @@ const PROJECT_KEY = 'wc2026_' + (PARAMS.get('project') || 'default');
   }
 })();
 
-const DATA_VERSION = 3; // 버전이 다르면 localStorage 무시
+// ── 데이터 로드 우선순위 ──────────────────────────────────────
+// 1순위: ./data/{project}.json (GitHub Pages fetch)
+// 2순위: localStorage 로컬 캐시 (오프라인/미설정 시 폴백)
+
+function applyData(p){
+  if(p.participants) S.participants = p.participants;
+  if(p.matches)      S.matches      = p.matches;
+  if(p.actuals)      S.actuals      = p.actuals;
+  if(p.nextId)       S.nextId       = p.nextId;
+}
 
 function save(){
-  try{localStorage.setItem(PROJECT_KEY, JSON.stringify({...S, _v: DATA_VERSION}));}catch(e){}
+  // 로컬 캐시 저장 (JSON 내보내기 / 오프라인 임시 보존용)
+  try{ localStorage.setItem(PROJECT_KEY, JSON.stringify(S)); }catch(e){}
 }
-function load(){
+
+async function loadRemote(){
+  const project = PARAMS.get('project');
+  if(!project) return false; // project 파라미터 없으면 스킵
+  try{
+    const res = await fetch(`./data/${encodeURIComponent(project)}.json`, {cache:'no-cache'});
+    if(!res.ok) return false;
+    const p = await res.json();
+    applyData(p);
+    console.log('[WC2026] fetch 성공:', project);
+    return true;
+  }catch(e){
+    console.warn('[WC2026] fetch 실패, localStorage 폴백:', e.message);
+    return false;
+  }
+}
+
+function loadLocal(){
   try{
     const d = localStorage.getItem(PROJECT_KEY);
-    if(!d) return;
+    if(!d) return false;
     const p = JSON.parse(d);
-    // 버전 불일치 시 저장 데이터 폐기, 초기값 유지
-    if(p._v !== DATA_VERSION){
-      localStorage.removeItem(PROJECT_KEY);
-      console.warn('[WC2026] 구버전 데이터 감지, 초기화:', p._v, '->', DATA_VERSION);
-      return;
-    }
-    if(p.participants) S.participants = p.participants;
-    if(p.matches)      S.matches      = p.matches;
-    if(p.actuals)      S.actuals      = p.actuals;
-    if(p.nextId)       S.nextId       = p.nextId;
-  }catch(e){}
+    applyData(p);
+    console.log('[WC2026] localStorage 로드:', PROJECT_KEY);
+    return true;
+  }catch(e){ return false; }
 }
 
 // ── 채점 ──────────────────────────────────────────────────
@@ -680,7 +700,12 @@ function x(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-load();render();
+// fetch 우선, 실패 시 localStorage 폴백
+(async()=>{
+  const ok = await loadRemote();
+  if(!ok) loadLocal();
+  render();
+})();
 </script>
 </body>
 </html>
