@@ -238,8 +238,21 @@ let S = {
 };
 
 // ── 저장 ──────────────────────────────────────────────────
-function save(){try{localStorage.setItem('wc2026v3',JSON.stringify(S));}catch(e){}}
-function load(){try{const d=localStorage.getItem('wc2026v3');if(d){const p=JSON.parse(d);S={...S,...p};}}catch(e){}}
+// ── 프로젝트 네임스페이스 ─────────────────────────────────────
+const PARAMS = new URLSearchParams(window.location.search);
+const PROJECT_KEY = 'wc2026_' + (PARAMS.get('project') || 'default');
+
+// 현재 프로젝트명을 헤더에 표시
+(function(){
+  const name = PARAMS.get('project');
+  if(name){
+    const sub = document.querySelector('.hdr-sub');
+    if(sub) sub.textContent = 'PROJECT: ' + name.toUpperCase();
+  }
+})();
+
+function save(){try{localStorage.setItem(PROJECT_KEY,JSON.stringify(S));}catch(e){}}
+function load(){try{const d=localStorage.getItem(PROJECT_KEY);if(d){const p=JSON.parse(d);S={...S,...p};}}catch(e){}}
 
 // ── 채점 ──────────────────────────────────────────────────
 function calcErr(p,a){return Math.abs((p.korea-p.opponent)-(a.korea-a.opponent));}
