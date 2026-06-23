@@ -251,8 +251,28 @@ const PROJECT_KEY = 'wc2026_' + (PARAMS.get('project') || 'default');
   }
 })();
 
-function save(){try{localStorage.setItem(PROJECT_KEY,JSON.stringify(S));}catch(e){}}
-function load(){try{const d=localStorage.getItem(PROJECT_KEY);if(d){const p=JSON.parse(d);S={...S,...p};}}catch(e){}}
+const DATA_VERSION = 3; // 버전이 다르면 localStorage 무시
+
+function save(){
+  try{localStorage.setItem(PROJECT_KEY, JSON.stringify({...S, _v: DATA_VERSION}));}catch(e){}
+}
+function load(){
+  try{
+    const d = localStorage.getItem(PROJECT_KEY);
+    if(!d) return;
+    const p = JSON.parse(d);
+    // 버전 불일치 시 저장 데이터 폐기, 초기값 유지
+    if(p._v !== DATA_VERSION){
+      localStorage.removeItem(PROJECT_KEY);
+      console.warn('[WC2026] 구버전 데이터 감지, 초기화:', p._v, '->', DATA_VERSION);
+      return;
+    }
+    if(p.participants) S.participants = p.participants;
+    if(p.matches)      S.matches      = p.matches;
+    if(p.actuals)      S.actuals      = p.actuals;
+    if(p.nextId)       S.nextId       = p.nextId;
+  }catch(e){}
+}
 
 // ── 채점 ──────────────────────────────────────────────────
 function calcErr(p,a){return Math.abs((p.korea-p.opponent)-(a.korea-a.opponent));}
